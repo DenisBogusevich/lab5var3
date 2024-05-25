@@ -36,6 +36,9 @@ class BookDatabaseHelper  (context: Context) :
         onCreate(db)
     }
     fun insertBook(book: Book) {
+        if (isBookExists(book)) {
+            throw Exception("Item already exist")
+        }
         val db = writableDatabase
         val values = ContentValues().apply {
             put(COLUMN_TITLE, book.title)
@@ -45,6 +48,25 @@ class BookDatabaseHelper  (context: Context) :
 
         }
         db.insert(TABLE_BOOKS, null, values)
+    }
+    fun isBookExists(book: Book): Boolean {
+        val db = readableDatabase
+        val selection = "$COLUMN_TITLE = ? AND $COLUMN_AUTHORS = ? AND $COLUMN_YEAR = ?"
+        val selectionArgs = arrayOf(book.title, book.authors, book.year)
+
+        val cursor = db.query(
+            TABLE_BOOKS,
+            arrayOf(COLUMN_TITLE),
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        )
+
+        val exists = cursor.count > 0
+        cursor.close()
+        return exists
     }
     /**
      * Retrieves all jokes from the database.

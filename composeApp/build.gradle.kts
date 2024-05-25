@@ -41,11 +41,13 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    sourceSets["androidTest"].java.srcDir("src/androidInstrumentedTest/kotlin")
 
     defaultConfig {
         applicationId = "org.kp5_7.project"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 1
         versionName = "1.0"
     }
@@ -80,5 +82,7 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.material3.android)
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     implementation(libs.androidx.runtime.livedata)
 }
