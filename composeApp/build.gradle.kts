@@ -77,4 +77,8 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.1")
     implementation("com.google.accompanist:accompanist-coil:0.15.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.runtime.livedata)
 }

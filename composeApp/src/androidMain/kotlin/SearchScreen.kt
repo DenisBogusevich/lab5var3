@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,7 +28,14 @@ fun SearchScreen(viewModel: SearchViewModel) {
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Search Books") })
+            TopAppBar(
+                title = { Text("Search Books") }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { viewModel.showHistory() }) {
+                Icon(Icons.Default.Menu, contentDescription = "history")
+            }
         }
     ) { padding ->
         Column(
@@ -78,7 +86,7 @@ fun SearchResultItem(book: Book, viewModel: SearchViewModel) {
             // Check if authors is not null and not empty before joining into a string
             book.authors?.let { authors ->
                 if (authors.isNotEmpty()) {
-                    Text(authors.joinToString(separator = ", "), style = MaterialTheme.typography.body2)
+                    Text(authors, style = MaterialTheme.typography.body2)
                 }
             }
             book.year?.let { year ->

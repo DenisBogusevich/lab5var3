@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -23,7 +24,8 @@ import org.kp5_7.project.R
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "SuspiciousIndentation")
 @Composable
 fun BookDetailScreen(viewModel: BookDetailsViewModel) {
-    val book by viewModel.selectedBook.collectAsState()
+    val book by viewModel.book.observeAsState()
+
 
 
   //  book?.let { bookDetails ->
@@ -40,6 +42,7 @@ fun BookDetailScreen(viewModel: BookDetailsViewModel) {
             }
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
+
                 // Display the book cover if available
                 book?.coverUrl?.let { url ->
                     Image(
@@ -57,7 +60,7 @@ fun BookDetailScreen(viewModel: BookDetailsViewModel) {
                 Text(book?.title ?: "No title available", style = MaterialTheme.typography.h6)
                 // Join authors into a string, or display "Author unknown" if the list is null or empty
                 Text(
-                    book?.authors?.joinToString(", ") ?: "Author unknown",
+                    book?.authors  ?: "Author unknown",
                     style = MaterialTheme.typography.body1
                 )
             }
